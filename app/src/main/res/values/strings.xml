@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">InventoryDB</string>
+    <string name="action_settings">Settings</string>
+    <string name="stored_tools_hint">These tools are stored in store.</string>
+    <string name="settings_toast_nothing_to_show">Sorry there is nothing to do now. :(</string>
+    <string name="new_row_created">New row created</string>
+</resources>
