@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">InventoryDB</string>
-    <string name="action_settings">Settings</string>
-    <string name="stored_tools_hint">These tools are stored in store.</string>
-    <string name="settings_toast_nothing_to_show">Sorry there is nothing to do now. :(</string>
     <string name="new_row_created">New row created</string>
     <string name="exc_unknown_query">Cannot query unknown uri</string>
     <string name="exc_unknown_uri">Unknown URI</string>
@@ -15,4 +12,6 @@
     <string name="sell_button">Sell</string>
     <string name="local_currency">Kč</string>
     <string name="quantity">ks</string>
+    <string name="insert_dummy_data">Insert dummy data</string>
+    <string name="action_settings">Delete all items</string>
 </resources>

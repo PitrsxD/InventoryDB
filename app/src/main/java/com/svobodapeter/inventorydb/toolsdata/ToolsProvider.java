@@ -7,8 +7,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.svobodapeter.inventorydb.R;
 import com.svobodapeter.inventorydb.toolsdata.ToolsContract.ToolsEntry;
@@ -60,8 +58,8 @@ public class ToolsProvider extends ContentProvider {
      * @return
      */
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
-                        @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection,
+                        String[] selectionArgs, String sortOrder) {
         //Will attach readable table to our SQL variable
         SQLiteDatabase db = mToolsDbHelper.getReadableDatabase();
 
@@ -100,7 +98,7 @@ public class ToolsProvider extends ContentProvider {
      * Returns the MIME type of data for the content URI.
      */
     @Override
-    public String getType(@NonNull Uri uri) {
+    public String getType(Uri uri) {
         // Getting matcher to select right path
         int matcher = sUriMatcher.match(uri);
         //Checking if URI is correct and return type of MIME
@@ -117,12 +115,13 @@ public class ToolsProvider extends ContentProvider {
 
     /**
      * Method will insert a new item into database acc. to selected table
-     * @param uri - matched address
+     *
+     * @param uri    - matched address
      * @param values - inserted values of item
      * @return
      */
     @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+    public Uri insert(Uri uri, ContentValues values) {
         // Getting matcher to select right path
         int matcher = sUriMatcher.match(uri);
 
@@ -136,6 +135,7 @@ public class ToolsProvider extends ContentProvider {
 
     /**
      * Sub-method of "insert" to insert a single item
+     *
      * @param uri
      * @param values
      * @return
@@ -183,14 +183,15 @@ public class ToolsProvider extends ContentProvider {
 
     /**
      * Method will delete whole table or just row acc. selection and selectionArgs
+     *
      * @param uri
-     * @param selection - for single item delete parameters
+     * @param selection     - for single item delete parameters
      * @param selectionArgs - for single item delete parameters
      * @return
      */
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection,
-                      @Nullable String[] selectionArgs) {
+    public int delete(Uri uri, String selection,
+                      String[] selectionArgs) {
         //Will define what URI is used for our switch
         int matcher = sUriMatcher.match(uri);
 
@@ -199,7 +200,7 @@ public class ToolsProvider extends ContentProvider {
 
         switch (matcher) {
             case TOOLS:
-                int affRowsDel = db.delete(ToolsEntry.TABLE_NAME, selection,selectionArgs);
+                int affRowsDel = db.delete(ToolsEntry.TABLE_NAME, selection, selectionArgs);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return affRowsDel;
             case TOOLS_ID:
@@ -207,40 +208,41 @@ public class ToolsProvider extends ContentProvider {
                 selection = ToolsEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
-                int affSingleRowDel = db.delete(ToolsEntry.TABLE_NAME, selection,selectionArgs);
-                return  affSingleRowDel;
-                default:
-                    throw new IllegalArgumentException(String.valueOf(R.string.exc_false_delete) + " " + uri);
+                int affSingleRowDel = db.delete(ToolsEntry.TABLE_NAME, selection, selectionArgs);
+                return affSingleRowDel;
+            default:
+                throw new IllegalArgumentException(String.valueOf(R.string.exc_false_delete) + " " + uri);
         }
     }
 
     /**
      * To update whole table or just rows acc. to selection with new values
+     *
      * @param uri
-     * @param values - new values
-     * @param selection - selected rows acc.
+     * @param values        - new values
+     * @param selection     - selected rows acc.
      * @param selectionArgs - selected rows acc.
      * @return
      */
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,
-                      @Nullable String[] selectionArgs) {
+    public int update(Uri uri, ContentValues values, String selection,
+                      String[] selectionArgs) {
         //Will define what URI is used for our switch
         int matcher = sUriMatcher.match(uri);
 
         //Switch will decide how to update data in table
         switch (matcher) {
             case TOOLS:
-                return updateTools (uri, values, selection, selectionArgs);
+                return updateTools(uri, values, selection, selectionArgs);
             case TOOLS_ID:
                 // TOOLS_ID update single item acc. ID in URI
                 selection = ToolsEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
                 // Will update item acc. to ID above (in URI/selection, selectionArgs)
-                updateTools (uri, values, selection, selectionArgs);
-                default:
-                    throw new IllegalArgumentException(String.valueOf(R.string.exc_false_update) + " " + uri);
+                updateTools(uri, values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException(String.valueOf(R.string.exc_false_update) + " " + uri);
         }
 
 
@@ -248,6 +250,7 @@ public class ToolsProvider extends ContentProvider {
 
     /**
      * Sub-method for update
+     *
      * @param uri
      * @param values
      * @param selection
@@ -282,10 +285,10 @@ public class ToolsProvider extends ContentProvider {
         }
 
         //Will update selected row with data from "values" and return number of affected rows
-        int affRows = db.update(ToolsEntry.TABLE_NAME,values,selection,selectionArgs);
+        int affRows = db.update(ToolsEntry.TABLE_NAME, values, selection, selectionArgs);
 
         //Will initialize listener to update view with data
-        getContext().getContentResolver().notifyChange(uri,null);
+        getContext().getContentResolver().notifyChange(uri, null);
 
         //Returning number of updated rows
         return affRows;

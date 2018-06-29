@@ -8,7 +8,7 @@ public class ToolsContract {
 
     //String path for app and variable for name of database
     public static final String CONTENT_AUTHORITY = "com.svobodapeter.inventorydb";
-    public static final String PATH_TOOLS = "storedTools";
+    public static final String PATH_TOOLS = "tools";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     private ToolsContract() {
