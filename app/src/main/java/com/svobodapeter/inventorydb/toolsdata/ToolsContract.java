@@ -1,8 +1,15 @@
-package com.svobodapeter.inventorydb;
+package com.svobodapeter.inventorydb.toolsdata;
 
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public class ToolsContract {
+
+    //String path for app and variable for name of database
+    public static final String CONTENT_AUTHORITY = "com.svobodapeter.inventorydb";
+    public static final String PATH_TOOLS = "storedTools";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     private ToolsContract() {
     }
@@ -39,5 +46,13 @@ public class ToolsContract {
 
         //String which will destroy a table
         public static final String DELET_TABLE_ENTRIES_TOOLS = "DROP TABLE IF EXISTS" + TABLE_NAME;
+
+        //Complete URI address for storedTools.db
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_TOOLS);
+
+        public static final String CONTENT_LIST_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + PATH_TOOLS;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.ANY_CURSOR_ITEM_TYPE + "/" + CONTENT_AUTHORITY + PATH_TOOLS;
+
+
     }
 }

@@ -14,7 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.svobodapeter.inventorydb.ToolsContract.ToolsEntry;
+import com.svobodapeter.inventorydb.toolsdata.ToolsContract.ToolsEntry;
+import com.svobodapeter.inventorydb.toolsdata.ToolsDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, R.string.new_row_created, Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 //Updating data on screen
-                displayDatabaseInfo();
+                //displayDatabaseInfo();
             }
         });
         //Loading or creating the database
         mDbHelper = new ToolsDbHelper(this, ToolsDbHelper.DB_NAME, null, ToolsDbHelper.DB_VERSION);
         //Updating data on screen
-        displayDatabaseInfo();
+        //displayDatabaseInfo();
     }
 
     /*
@@ -72,15 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             //Searching for TextView which will display our data
-            TextView displayView = findViewById(R.id.test_text_view);
-            displayView.setText(getString(R.string.stored_tools_hint) + "\n" + "\n");
-            //Appending to the TextView schema of our database
-            displayView.append(ToolsEntry._ID + " - " +
-                    ToolsEntry.COLUMN_PRODUCT_NAME + " - " +
-                    ToolsEntry.COLUMN_PRICE + " - " +
-                    ToolsEntry.COLUMN_QUANTITY + " - " +
-                    ToolsEntry.COLUMN_SUPPLIER_NAME + " - " +
-                    ToolsEntry.COLUMN_SUPPLIER_PHONE);
 
             //Getting index for columns in tools table
             int idColumnIndex = cursor.getColumnIndex(ToolsEntry._ID);
@@ -100,13 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 int currentSupplierPhone = cursor.getInt(supplierPhoneColumnIndex);
 
                 //Appending extracted data to our TextView and showing through our TextView
-                displayView.append("\n" + currentId + " - " +
-                        currentProductName + " - " +
-                        currentPrice + " - " +
-                        currentQuantity + " - " +
-                        currentSupplierName + " - " +
-                        currentSupplierPhone
-                );
+
             }
         } finally {
             //Closing our cursor to prevent memory leaks

@@ -1,15 +1,16 @@
-package com.svobodapeter.inventorydb;
+package com.svobodapeter.inventorydb.toolsdata;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.svobodapeter.inventorydb.ToolsContract.ToolsEntry;
+import com.svobodapeter.inventorydb.toolsdata.ToolsContract.ToolsEntry;
 
 
 public class ToolsDbHelper extends SQLiteOpenHelper {
     //Name of Database!
     public static final String DB_NAME = "storedTools.db";
+    //Version of Database!
     public static final int DB_VERSION = 1;
 
     /*

@@ -4,4 +4,15 @@
     <string name="stored_tools_hint">These tools are stored in store.</string>
     <string name="settings_toast_nothing_to_show">Sorry there is nothing to do now. :(</string>
     <string name="new_row_created">New row created</string>
+    <string name="exc_unknown_query">Cannot query unknown uri</string>
+    <string name="exc_unknown_uri">Unknown URI</string>
+    <string name="exc_unknown_uri_match">with match</string>
+    <string name="exc_missing_pr_name">Missing product name</string>
+    <string name="exc_missing_price">Invalid or missing price</string>
+    <string name="exc_insert_data">Insertion is not possible for</string>
+    <string name="exc_false_update">Update is not supported for</string>
+    <string name="exc_false_delete">Item was not deleted with</string>
+    <string name="sell_button">Sell</string>
+    <string name="local_currency">Kč</string>
+    <string name="quantity">ks</string>
 </resources>
