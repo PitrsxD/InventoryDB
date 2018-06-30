@@ -35,7 +35,10 @@ public class ToolsCursorAdapter extends CursorAdapter {
         TextView priceTextView = view.findViewById(R.id.price);
         TextView quantityTextView = view.findViewById(R.id.quantity_in_stock);
 
+
         //Indexing columns in table through cursor and getting data
+        int _id = cursor.getInt(cursor.getColumnIndex(ToolsEntry._ID));
+
         //Data for product name
         String name = cursor.getString(cursor.getColumnIndex(ToolsEntry.COLUMN_PRODUCT_NAME));
         //Data for price
@@ -55,7 +58,6 @@ public class ToolsCursorAdapter extends CursorAdapter {
 
         //Setting the quantity and adding shortcut for peaces
         quantityTextView.setText(quantity);
-        String quantityF = context.getResources().getString(R.string.quantity);
-        quantityTextView.append(" " + quantityF);
+
     }
 }

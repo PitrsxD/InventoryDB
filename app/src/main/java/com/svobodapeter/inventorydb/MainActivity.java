@@ -1,21 +1,27 @@
 package com.svobodapeter.inventorydb;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.svobodapeter.inventorydb.toolsdata.ToolsContract.ToolsEntry;
 import com.svobodapeter.inventorydb.toolsdata.ToolsCursorAdapter;
@@ -30,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String[] projection = new String[]{ToolsEntry._ID, ToolsEntry.COLUMN_PRODUCT_NAME,
             ToolsEntry.COLUMN_QUANTITY, ToolsEntry.COLUMN_PRICE};
 
+    long currentId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +48,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Inserting dummy data
-                insertDummyTools();
-                //Showing message to user, that new row was created
-                Snackbar.make(view, R.string.new_row_created, Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, ToolDetail.class);
+                startActivity(intent);
             }
         });
         //Loading or creating the database
@@ -54,14 +59,46 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Cursor cursor = getContentResolver().query(ToolsEntry.CONTENT_URI, projection, null, null, null);
         Log.i("Used URI", String.valueOf(ToolsEntry.CONTENT_URI));
 
-        ListView displayListView = findViewById(R.id.list_view_tools);
+        final ListView displayListView = findViewById(R.id.list_view_tools);
         View emptyView = findViewById(R.id.empty_view);
         displayListView.setEmptyView(emptyView);
 
         toolsCursorAdapter = new ToolsCursorAdapter(this, cursor);
+
+
+        displayListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {//lowerStockByOne(id);
+            }
+        });
+
         displayListView.setAdapter(toolsCursorAdapter);
 
         getLoaderManager().initLoader(0, null, this);
+
+
+    }
+
+
+    private void lowerStockByOne(long currentId) {
+        TextView quantityInStock = findViewById(R.id.quantity_in_stock);
+        String mQuantityIS = quantityInStock.getText().toString();
+        int quantity = Integer.getInteger(mQuantityIS);
+        if (quantity > 0) {
+            quantity--;
+            mDbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(ToolsEntry.COLUMN_QUANTITY, quantity);
+            Uri currentUri = ContentUris.withAppendedId(ToolsEntry.CONTENT_URI, currentId);
+            if (currentUri != null) {
+                int rowsAffected = getContentResolver().update(currentUri, values, null, null);
+                if (rowsAffected == 0) {
+                    Toast.makeText(this, "The item was sold", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+
     }
 
 
@@ -90,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 insertDummyTools();
                 return true;
             case (R.id.delete_all_items):
-                getContentResolver().delete(ToolsEntry.CONTENT_URI,null,null);
+                getContentResolver().delete(ToolsEntry.CONTENT_URI, null, null);
         }
 
         return super.onOptionsItemSelected(item);

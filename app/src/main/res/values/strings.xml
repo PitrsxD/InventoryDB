@@ -14,4 +14,20 @@
     <string name="quantity">ks</string>
     <string name="insert_dummy_data">Insert dummy data</string>
     <string name="action_settings">Delete all items</string>
+    <string name="inventory_name">Stored inventory</string>
+    <string name="inventory_add">Add Tool</string>
+    <string name="inventory_detail">Tool Detail</string>
+    <string name="obligatory_data">Obligatory Data</string>
+    <string name="product_name_textview">Product name:</string>
+    <string name="price_textview">Price:</string>
+    <string name="quantity_textview">Quantity:</string>
+    <string name="optional_data_textview">Optional Data</string>
+    <string name="supplier_textview">Supplier:</string>
+    <string name="supplier_contact_textview">Supplier contact:</string>
+    <string name="fill_the_name_edittext">Fill the name</string>
+    <string name="fill_the_price_edittext">Fill the price</string>
+    <string name="_edittext">Quantity</string>
+    <string name="name_of_company_edittext">Name of company</string>
+    <string name="phone_number_edittext">Phone number</string>
+    <string name="detail_button">Detail</string>
 </resources>
