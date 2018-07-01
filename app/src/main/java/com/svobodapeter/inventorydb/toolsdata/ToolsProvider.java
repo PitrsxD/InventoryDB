@@ -237,12 +237,12 @@ public class ToolsProvider extends ContentProvider {
             case TOOLS_ID:
                 // TOOLS_ID update single item acc. ID in URI
                 selection = ToolsEntry._ID + "=?";
-                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
 
                 // Will update item acc. to ID above (in URI/selection, selectionArgs)
-                updateTools(uri, values, selection, selectionArgs);
+                return updateTools(uri, values, selection, selectionArgs);
             default:
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_false_update) + " " + uri);
+                throw new IllegalArgumentException("Update is not supported for" + " " + uri);
         }
 
 

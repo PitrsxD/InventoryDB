@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">InventoryDB</string>
     <string name="new_row_created">New row created</string>
+
     <string name="exc_unknown_query">Cannot query unknown uri</string>
     <string name="exc_unknown_uri">Unknown URI</string>
     <string name="exc_unknown_uri_match">with match</string>
@@ -9,11 +10,15 @@
     <string name="exc_insert_data">Insertion is not possible for</string>
     <string name="exc_false_update">Update is not supported for</string>
     <string name="exc_false_delete">Item was not deleted with</string>
+
     <string name="sell_button">Sell</string>
     <string name="local_currency">Kč</string>
     <string name="quantity">ks</string>
+
     <string name="insert_dummy_data">Insert dummy data</string>
-    <string name="action_settings">Delete all items</string>
+    <string name="delete_all_items">Delete all items</string>
+    <string name="delete_item">Delete the item</string>
+
     <string name="inventory_name">Stored inventory</string>
     <string name="inventory_add">Add Tool</string>
     <string name="inventory_detail">Tool Detail</string>
@@ -26,8 +31,12 @@
     <string name="supplier_contact_textview">Supplier contact:</string>
     <string name="fill_the_name_edittext">Fill the name</string>
     <string name="fill_the_price_edittext">Fill the price</string>
-    <string name="_edittext">Quantity</string>
+    <string name="quantity_edittext">Quantity</string>
     <string name="name_of_company_edittext">Name of company</string>
     <string name="phone_number_edittext">Phone number</string>
     <string name="detail_button">Detail</string>
+    <string name="quantity_less_than_0">Quantity can not be less than 0</string>
+    <string name="data_saved">Data saved</string>
+    <string name="data_not_saved">Data not saved!</string>
+    <string name="empty_view_no_data">No data here for now. Please add item into inventory</string>
 </resources>

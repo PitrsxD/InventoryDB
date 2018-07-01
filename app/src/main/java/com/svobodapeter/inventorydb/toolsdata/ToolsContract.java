@@ -41,11 +41,11 @@ public class ToolsContract {
                 COLUMN_PRICE + INTEGER + NOT_NULL + DEFAULT + COMMA +
                 COLUMN_QUANTITY + INTEGER + NOT_NULL + DEFAULT + COMMA +
                 COLUMN_SUPPLIER_NAME + TEXT + COMMA +
-                COLUMN_SUPPLIER_PHONE + INTEGER + DEFAULT +
+                COLUMN_SUPPLIER_PHONE + TEXT +
                 ")";
 
         //String which will destroy a table
-        public static final String DELET_TABLE_ENTRIES_TOOLS = "DROP TABLE IF EXISTS" + TABLE_NAME;
+        public static final String DELETE_TABLE_ENTRIES_TOOLS = "DROP TABLE IF EXISTS" + TABLE_NAME;
 
         //Complete URI address for storedTools.db
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_TOOLS);

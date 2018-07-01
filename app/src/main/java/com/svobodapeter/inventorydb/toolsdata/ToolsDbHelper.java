@@ -34,7 +34,7 @@ public class ToolsDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(ToolsEntry.DELET_TABLE_ENTRIES_TOOLS);
+        db.execSQL(ToolsEntry.DELETE_TABLE_ENTRIES_TOOLS);
         onCreate(db);
     }
 

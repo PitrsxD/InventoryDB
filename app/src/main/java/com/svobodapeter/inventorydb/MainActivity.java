@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,14 +66,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         toolsCursorAdapter = new ToolsCursorAdapter(this, cursor);
 
-
+        displayListView.setAdapter(toolsCursorAdapter);
         displayListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {//lowerStockByOne(id);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent (MainActivity.this,ToolDetail.class);
+                intent.setData(ContentUris.withAppendedId(ToolsEntry.CONTENT_URI, id));
+                startActivity(intent);
             }
         });
-
-        displayListView.setAdapter(toolsCursorAdapter);
 
         getLoaderManager().initLoader(0, null, this);
 
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    private void lowerStockByOne(long currentId) {
+    private void sellOneButton (View v) {
         TextView quantityInStock = findViewById(R.id.quantity_in_stock);
         String mQuantityIS = quantityInStock.getText().toString();
         int quantity = Integer.getInteger(mQuantityIS);
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     /*
-    Creating menu - not important for now
+    Creating menu
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         int price = 70;
         int quantity = 1;
         String supplierName = "Hammer Factory";
-        int supplierPhone = 429666444;
+        String supplierPhone = "429666444";
 
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
