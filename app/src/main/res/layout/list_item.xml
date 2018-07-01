@@ -4,66 +4,74 @@
     android:id="@+id/id_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:layout_marginTop="@dimen/top_bottom_small"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
         android:minWidth="80dp"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/name"
+            style="@style/item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:textAppearance="?android:textAppearanceMedium"
-            tools:text="Kladivo"
-            style="@style/item"/>
+            tools:text="Kladivo" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/quantity_in_stock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textAppearance="?android:textAppearanceSmall"
-            tools:text="30"
-            android:layout_marginStart="@dimen/start_end_small"
-            android:textColor="@color/colorNote"/>
+            <TextView
+                android:id="@+id/quantity_in_stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/start_end_small"
+                android:fontFamily="sans-serif"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/colorNote"
+                tools:text="30" />
 
             <TextView
                 android:id="@+id/quantity_shortcut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
-                android:textAppearance="?android:textAppearanceSmall"
                 android:text=" ks"
+                android:textAppearance="?android:textAppearanceSmall"
 
-                android:textColor="@color/colorNote"/>
+                android:textColor="@color/colorNote" />
         </LinearLayout>
     </LinearLayout>
 
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="55dp"
-            android:fontFamily="sans-serif-medium"
-            android:textAppearance="?android:textAppearanceMedium"
-            tools:text="370 Kč"
-            style="@style/item"/>
+    <TextView
+        android:id="@+id/price"
+        style="@style/item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
+        android:minWidth="55dp"
+        android:textAppearance="?android:textAppearanceMedium"
+        tools:text="370 Kč" />
 
-
+    <Button
+        android:id="@+id/sell_button"
+        style="@style/item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:onClick="sellOneItem"
+        android:text="@string/sell_button" />
 
 
 </LinearLayout>

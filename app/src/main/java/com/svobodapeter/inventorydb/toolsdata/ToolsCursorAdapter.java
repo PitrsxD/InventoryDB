@@ -5,9 +5,11 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import com.svobodapeter.inventorydb.MainActivity;
 import com.svobodapeter.inventorydb.R;
 import com.svobodapeter.inventorydb.toolsdata.ToolsContract.ToolsEntry;
 
@@ -29,23 +31,24 @@ public class ToolsCursorAdapter extends CursorAdapter {
 
     //Binding data to each compoment of ListView and creating or updating views.
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(final View view, final Context context, final Cursor cursor) {
         //Find views to bind data
         TextView productNameTextView = view.findViewById(R.id.name);
         TextView priceTextView = view.findViewById(R.id.price);
         TextView quantityTextView = view.findViewById(R.id.quantity_in_stock);
+        Button sellButton = view.findViewById(R.id.sell_button);
 
 
         //Indexing columns in table through cursor and getting data
-        int _id = cursor.getInt(cursor.getColumnIndex(ToolsEntry._ID));
-
+        //Will provide id which is used later for sellButton
+        final int id = cursor.getInt(cursor.getColumnIndex(ToolsEntry._ID));
         //Data for product name
         String name = cursor.getString(cursor.getColumnIndex(ToolsEntry.COLUMN_PRODUCT_NAME));
         //Data for price
         int mPrice = cursor.getInt(cursor.getColumnIndex(ToolsEntry.COLUMN_PRICE));
         String price = String.valueOf(mPrice);
         //Data for quantity
-        int mQuantity = cursor.getInt(cursor.getColumnIndex(ToolsEntry.COLUMN_QUANTITY));
+        final int mQuantity = cursor.getInt(cursor.getColumnIndex(ToolsEntry.COLUMN_QUANTITY));
         String quantity = String.valueOf(mQuantity);
 
         //Setting the product name
@@ -59,5 +62,15 @@ public class ToolsCursorAdapter extends CursorAdapter {
         //Setting the quantity and adding shortcut for peaces
         quantityTextView.setText(quantity);
 
+        //Calling method from MainActivity to sell one piece of item
+        sellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) context;
+                mainActivity.sellOneItem(id, mQuantity);
+            }
+        });
+
     }
 }
+

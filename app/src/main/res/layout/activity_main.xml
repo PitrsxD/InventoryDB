@@ -17,10 +17,11 @@
 
         <TextView
             android:id="@+id/empty_view"
+            style="@style/item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="No data here for now" />
+            android:text="@string/empty_view_no_data" />
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton

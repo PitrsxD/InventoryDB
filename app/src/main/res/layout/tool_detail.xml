@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -154,9 +153,9 @@
                 style="@style/item"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.5"
-                android:text="@string/supplier_contact_textview"
-                android:layout_gravity="center_vertical"/>
+                android:text="@string/supplier_contact_textview" />
 
             <EditText
                 android:id="@+id/supp_phone_number_edittext"
@@ -173,8 +172,8 @@
             android:id="@+id/call_to_supp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Call to supplier"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:text="@string/call_to_supplier" />
 
     </LinearLayout>
 
@@ -184,7 +183,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/start_end_big"
         android:layout_marginBottom="@dimen/top_bottom_big"
+        android:layout_marginEnd="@dimen/start_end_big"
         app:srcCompat="@drawable/ic_save" />
 </RelativeLayout>

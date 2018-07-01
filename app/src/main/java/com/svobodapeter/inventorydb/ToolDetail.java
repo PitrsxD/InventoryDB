@@ -21,9 +21,12 @@ import android.widget.Toast;
 import com.svobodapeter.inventorydb.toolsdata.ToolsContract.ToolsEntry;
 import com.svobodapeter.inventorydb.toolsdata.ToolsDbHelper;
 
-
+/**
+ * Activity where user can create new item, or update existing item with new data
+ */
 public class ToolDetail extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    //Global variables for EditTexts in list_item.xml
     private EditText mProductNameEditText;
     private EditText mPriceEditText;
     private EditText mQuantityEditText;
@@ -32,6 +35,7 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
 
     private ToolsDbHelper mToolsDbHelper;
 
+    //Uri used for item update
     private Uri currentToolUri;
 
     boolean contentCheck;
@@ -43,6 +47,7 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
         setContentView(R.layout.tool_detail);
         setTitle(getString(R.string.inventory_add));
 
+        //Setting views for our EditTexts variables
         mProductNameEditText = findViewById(R.id.product_name_edittext);
         mPriceEditText = findViewById(R.id.price_edittext);
         mQuantityEditText = findViewById(R.id.quantity_edittext);
@@ -52,6 +57,7 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
         String defaultQuantity = "0";
         mQuantityEditText.setText(defaultQuantity);
 
+        //For case of already created item is detail opened
         Intent mainActivityIntent = getIntent();
         currentToolUri = mainActivityIntent.getData();
         if (currentToolUri != null) {
@@ -59,25 +65,31 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
             setDataInView();
         }
 
+        //Setting buttons to variables
         Button minusButton = findViewById(R.id.button_minus);
         Button plusButton = findViewById(R.id.button_plus);
         Button callToSupp = findViewById(R.id.call_to_supp);
         FloatingActionButton fabSave = findViewById(R.id.fab_save);
 
+        //Listener of button for quantity decreasing
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Method for decreasing and updating view
                 minusButton();
             }
         });
 
+        //Listener of button for quantity increasing
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Method for increasing and updating view
                 plusButton();
             }
         });
 
+        //Listener of button to call on contact of supplier
         callToSupp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,12 +99,16 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
             }
         });
 
+//Listener of button to save new data or update data
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Validating inserted data
                 contentCheckMethod();
                 if (contentCheck) {
+                    //Saving data into table
                     saveData();
+                    //Going back on MainActivity where the ListView is updated
                     backToMainActivity();
                 }
 
@@ -100,6 +116,7 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
         });
     }
 
+    //After creating new item or updating old item is view switched back on MainActivity
     private void backToMainActivity() {
         Intent toMainActivity = new Intent(ToolDetail.this, MainActivity.class);
         startActivity(toMainActivity);
@@ -148,6 +165,9 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
 
     }
 
+    /**
+     * Decreasing of quantity
+     */
     private void minusButton() {
         int quantity = Integer.parseInt(mQuantityEditText.getText().toString());
         if (quantity > 0) {
@@ -158,12 +178,18 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
         }
     }
 
+    /**
+     * Increasing of quantity
+     */
     private void plusButton() {
         int quantity = Integer.parseInt(mQuantityEditText.getText().toString());
         quantity++;
         mQuantityEditText.setText(String.valueOf(quantity));
     }
 
+    /**
+     * Method where system is passing inserted data to values and creating new item or updating old item
+     */
     private void saveData() {
         String productName = mProductNameEditText.getText().toString().trim();
         int price = Integer.parseInt(mPriceEditText.getText().toString().trim());
@@ -181,6 +207,7 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
         values.put(ToolsEntry.COLUMN_SUPPLIER_NAME, suppName);
         values.put(ToolsEntry.COLUMN_SUPPLIER_PHONE, phone);
 
+        //currentToolUri is saying if this is a new item (in case of null) or old item and we are just updating
         if (currentToolUri == null) {
             getContentResolver().insert(ToolsEntry.CONTENT_URI, values);
         } else {
@@ -191,6 +218,9 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
         }
     }
 
+    /**
+     * Method where system is validating inputs and shows message in case of missing data
+     */
     private void contentCheckMethod() {
         String productNameCheck = mProductNameEditText.getText().toString();
         String priceCheck = mPriceEditText.getText().toString();

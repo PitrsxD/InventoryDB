@@ -16,12 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.svobodapeter.inventorydb.toolsdata.ToolsContract.ToolsEntry;
@@ -37,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String[] projection = new String[]{ToolsEntry._ID, ToolsEntry.COLUMN_PRODUCT_NAME,
             ToolsEntry.COLUMN_QUANTITY, ToolsEntry.COLUMN_PRICE};
 
-    long currentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,41 +55,41 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Cursor cursor = getContentResolver().query(ToolsEntry.CONTENT_URI, projection, null, null, null);
         Log.i("Used URI", String.valueOf(ToolsEntry.CONTENT_URI));
 
+        //Setting up the ListView and EmptyView for case of no avaliable data
         final ListView displayListView = findViewById(R.id.list_view_tools);
         View emptyView = findViewById(R.id.empty_view);
         displayListView.setEmptyView(emptyView);
 
+        //Setting up adapter and ClickListener to open detail of each item
         toolsCursorAdapter = new ToolsCursorAdapter(this, cursor);
-
         displayListView.setAdapter(toolsCursorAdapter);
         displayListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent (MainActivity.this,ToolDetail.class);
+                Intent intent = new Intent(MainActivity.this, ToolDetail.class);
                 intent.setData(ContentUris.withAppendedId(ToolsEntry.CONTENT_URI, id));
                 startActivity(intent);
             }
         });
 
         getLoaderManager().initLoader(0, null, this);
-
-
     }
 
-
-    private void sellOneButton (View v) {
-        TextView quantityInStock = findViewById(R.id.quantity_in_stock);
-        String mQuantityIS = quantityInStock.getText().toString();
-        int quantity = Integer.getInteger(mQuantityIS);
+    /**
+     * Method to decrease number of pieces in item and passing it as update to table
+     */
+    public void sellOneItem(long id, int quantity) {
+        //Lowering the quantity
         if (quantity > 0) {
             quantity--;
+            //Passing information to table
             mDbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(ToolsEntry.COLUMN_QUANTITY, quantity);
-            Uri currentUri = ContentUris.withAppendedId(ToolsEntry.CONTENT_URI, currentId);
+            Uri currentUri = ContentUris.withAppendedId(ToolsEntry.CONTENT_URI, id);
             if (currentUri != null) {
                 int rowsAffected = getContentResolver().update(currentUri, values, null, null);
-                if (rowsAffected == 0) {
+                if (rowsAffected != 0) {
                     Toast.makeText(this, "The item was sold", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -131,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case (R.id.delete_all_items):
                 getContentResolver().delete(ToolsEntry.CONTENT_URI, null, null);
         }
-
         return super.onOptionsItemSelected(item);
     }
 

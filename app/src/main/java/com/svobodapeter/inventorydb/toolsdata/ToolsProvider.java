@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.svobodapeter.inventorydb.R;
 import com.svobodapeter.inventorydb.toolsdata.ToolsContract.ToolsEntry;
 
 public class ToolsProvider extends ContentProvider {
@@ -85,7 +84,7 @@ public class ToolsProvider extends ContentProvider {
                 break;
             default:
                 //Throws exception about unknown URI
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_unknown_query) + " " + uri);
+                throw new IllegalArgumentException("Cannot query unknown uri" + " " + uri);
         }
 
         //Setting listener for cases when data is updated
@@ -108,8 +107,8 @@ public class ToolsProvider extends ContentProvider {
             case TOOLS_ID:
                 return ToolsEntry.CONTENT_ITEM_TYPE;
             default:
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_unknown_uri) + " " + uri +
-                        String.valueOf(R.string.exc_unknown_uri_match) + " " + matcher);
+                throw new IllegalArgumentException("Unknown URI" + " " + uri +
+                        "with match" + " " + matcher);
         }
     }
 
@@ -129,7 +128,7 @@ public class ToolsProvider extends ContentProvider {
             case TOOLS:
                 return insertTool(uri, values);
             default:
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_insert_data) + " " + uri);
+                throw new IllegalArgumentException("Insertion is not possible for" + " " + uri);
         }
     }
 
@@ -148,7 +147,7 @@ public class ToolsProvider extends ContentProvider {
         if (values.containsKey(ToolsEntry.COLUMN_PRODUCT_NAME)) {
             String productName = values.getAsString(ToolsEntry.COLUMN_PRODUCT_NAME);
             if (productName == null) {
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_missing_pr_name));
+                throw new IllegalArgumentException("Missing product name");
             }
         }
 
@@ -156,7 +155,7 @@ public class ToolsProvider extends ContentProvider {
         if (values.containsKey(ToolsEntry.COLUMN_PRICE)) {
             int price = values.getAsInteger(ToolsEntry.COLUMN_PRICE);
             if (price < 0) {
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_missing_price));
+                throw new IllegalArgumentException("Invalid or missing price");
             }
         }
 
@@ -164,14 +163,14 @@ public class ToolsProvider extends ContentProvider {
         if (values.containsKey(ToolsEntry.COLUMN_QUANTITY)) {
             int quantity = values.getAsInteger(ToolsEntry.COLUMN_QUANTITY);
             if (quantity < 0) {
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_missing_price));
+                throw new IllegalArgumentException("Invalid or missing quantity");
             }
         }
 
         //Inserting "values" into table and throw exception in case of error
         long newRowId = db.insert(ToolsEntry.TABLE_NAME, null, values);
         if (newRowId < 0) {
-            throw new IllegalArgumentException(String.valueOf(R.string.exc_insert_data) + " " + uri);
+            throw new IllegalArgumentException("Insertion is not possible for" + " " + uri);
         }
 
         //Giving info to listener that data is updated and to refresh view
@@ -211,7 +210,7 @@ public class ToolsProvider extends ContentProvider {
                 int affSingleRowDel = db.delete(ToolsEntry.TABLE_NAME, selection, selectionArgs);
                 return affSingleRowDel;
             default:
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_false_delete) + " " + uri);
+                throw new IllegalArgumentException("Item was not deleted with" + " " + uri);
         }
     }
 
@@ -237,7 +236,7 @@ public class ToolsProvider extends ContentProvider {
             case TOOLS_ID:
                 // TOOLS_ID update single item acc. ID in URI
                 selection = ToolsEntry._ID + "=?";
-                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
                 // Will update item acc. to ID above (in URI/selection, selectionArgs)
                 return updateTools(uri, values, selection, selectionArgs);
@@ -264,7 +263,7 @@ public class ToolsProvider extends ContentProvider {
         if (values.containsKey(ToolsEntry.COLUMN_PRODUCT_NAME)) {
             String productName = values.getAsString(ToolsEntry.COLUMN_PRODUCT_NAME);
             if (productName == null) {
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_missing_pr_name));
+                throw new IllegalArgumentException("Missing product name");
             }
         }
 
@@ -272,7 +271,7 @@ public class ToolsProvider extends ContentProvider {
         if (values.containsKey(ToolsEntry.COLUMN_PRICE)) {
             int price = values.getAsInteger(ToolsEntry.COLUMN_PRICE);
             if (price < 0) {
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_missing_price));
+                throw new IllegalArgumentException("Invalid or missing price");
             }
         }
 
@@ -280,7 +279,7 @@ public class ToolsProvider extends ContentProvider {
         if (values.containsKey(ToolsEntry.COLUMN_QUANTITY)) {
             int quantity = values.getAsInteger(ToolsEntry.COLUMN_QUANTITY);
             if (quantity < 0) {
-                throw new IllegalArgumentException(String.valueOf(R.string.exc_missing_price));
+                throw new IllegalArgumentException("Invalid or missing quantity");
             }
         }
 
