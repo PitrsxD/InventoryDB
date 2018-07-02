@@ -167,6 +167,22 @@ public class ToolsProvider extends ContentProvider {
             }
         }
 
+        //Data check before inserting - Supplier name
+        if (values.containsKey(ToolsEntry.COLUMN_SUPPLIER_NAME)) {
+            String suppNameCheck = values.getAsString(ToolsEntry.COLUMN_SUPPLIER_NAME);
+            if (suppNameCheck == null) {
+                throw new IllegalArgumentException("Invalid or missing supplier name");
+            }
+        }
+
+        //Data check before inserting - Supplier name
+        if (values.containsKey(ToolsEntry.COLUMN_SUPPLIER_PHONE)) {
+            String suppPhoneCheck = values.getAsString(ToolsEntry.COLUMN_SUPPLIER_PHONE);
+            if (suppPhoneCheck == null) {
+                throw new IllegalArgumentException("Invalid or missing phone number");
+            }
+        }
+
         //Inserting "values" into table and throw exception in case of error
         long newRowId = db.insert(ToolsEntry.TABLE_NAME, null, values);
         if (newRowId < 0) {
@@ -280,6 +296,22 @@ public class ToolsProvider extends ContentProvider {
             int quantity = values.getAsInteger(ToolsEntry.COLUMN_QUANTITY);
             if (quantity < 0) {
                 throw new IllegalArgumentException("Invalid or missing quantity");
+            }
+        }
+
+        //Data check before inserting - Supplier name
+        if (values.containsKey(ToolsEntry.COLUMN_SUPPLIER_NAME)) {
+            String suppNameCheck = values.getAsString(ToolsEntry.COLUMN_SUPPLIER_NAME);
+            if (suppNameCheck == null) {
+                throw new IllegalArgumentException("Invalid or missing supplier name");
+            }
+        }
+
+        //Data check before inserting - Supplier name
+        if (values.containsKey(ToolsEntry.COLUMN_SUPPLIER_PHONE)) {
+            String suppPhoneCheck = values.getAsString(ToolsEntry.COLUMN_SUPPLIER_PHONE);
+            if (suppPhoneCheck == null) {
+                throw new IllegalArgumentException("Invalid or missing phone number");
             }
         }
 

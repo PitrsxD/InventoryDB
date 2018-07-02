@@ -40,8 +40,8 @@ public class ToolsContract {
                 COLUMN_PRODUCT_NAME + TEXT + NOT_NULL + COMMA +
                 COLUMN_PRICE + INTEGER + NOT_NULL + DEFAULT + COMMA +
                 COLUMN_QUANTITY + INTEGER + NOT_NULL + DEFAULT + COMMA +
-                COLUMN_SUPPLIER_NAME + TEXT + COMMA +
-                COLUMN_SUPPLIER_PHONE + TEXT +
+                COLUMN_SUPPLIER_NAME + TEXT + NOT_NULL + COMMA +
+                COLUMN_SUPPLIER_PHONE + TEXT + NOT_NULL +
                 ")";
 
         //String which will destroy a table

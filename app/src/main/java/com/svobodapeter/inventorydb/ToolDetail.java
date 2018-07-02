@@ -1,8 +1,10 @@
 package com.svobodapeter.inventorydb;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -225,17 +227,25 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
         String productNameCheck = mProductNameEditText.getText().toString();
         String priceCheck = mPriceEditText.getText().toString();
         String quantity = mQuantityEditText.getText().toString();
+        String suppName = mSupplierNameEditText.getText().toString();
+        String suppPhone = mSupplierPhoneEditText.getText().toString();
 
         if (TextUtils.isEmpty(productNameCheck) || TextUtils.isEmpty(priceCheck) ||
-                TextUtils.isEmpty(quantity)) {
+                TextUtils.isEmpty(quantity) || TextUtils.isEmpty(suppName) || TextUtils.isEmpty(suppPhone)) {
             if (TextUtils.isEmpty(productNameCheck)) {
-                mProductNameEditText.setError("Please write name of product");
+                mProductNameEditText.setError("Please, write name of product");
             }
             if (TextUtils.isEmpty(priceCheck)) {
-                mPriceEditText.setError("Please fill the price of product");
+                mPriceEditText.setError("Please, fill the price of product");
             }
             if (TextUtils.isEmpty(quantity)) {
-                mQuantityEditText.setError("Please fill number of pieces in stock");
+                mQuantityEditText.setError("Please, fill number of pieces in stock");
+            }
+            if (TextUtils.isEmpty(suppName)){
+                mSupplierNameEditText.setError("Please, fill the name of supplier");
+            }
+            if (TextUtils.isEmpty(suppPhone)){
+                mSupplierPhoneEditText.setError("Please, fill the phone of supplier");
             }
 
         } else {
@@ -267,10 +277,35 @@ public class ToolDetail extends AppCompatActivity implements LoaderManager.Loade
             //When is menu selected, message is visible to the user.
             //noinspection SimplifiableIfStatement
             case (R.id.delete_item):
-                getContentResolver().delete(currentToolUri, null, null);
+                deleteDialogMessage();
         }
-        backToMainActivity();
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Method will create alert dialog to alert before deleting the button
+     */
+    private void deleteDialogMessage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_one_item_message);
+        builder.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getContentResolver().delete(currentToolUri, null, null);
+                backToMainActivity();
+            }
+        });
+        builder.setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (dialog == null){
+                    dialog.dismiss();
+                }
+            }
+        });
+        //Will show the alert dialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
 
